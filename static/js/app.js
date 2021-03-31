@@ -2,20 +2,25 @@
 d3.json("../samples.json").then((data) => {
     // console.log(data['names']);
     // I want to get from data to a list of dictionaries
-    var samples = data["samples"]
-    console.log(samples)
-    // // sort data by top 10 otus 
-    // var sorted = data.sort((a,b)=> b["samples"]["sample_values"])
+    var sample_list = data["samples"]
+    var otu_ids_test=sample_list[0]['otu_ids']
+    // console.log(otu_ids_test)
+    var top_10_otus=otu_ids_test.slice(0,10)
+    console.log(top_10_otus);
+    // 
     // // slice first 10 objects for plotting
 
 
     // // pull id of subject to match dropdown
-    // var id_sample=data['samples']['id']
-    // console.log(id_sample);
+    var id_test=data['samples'][0]['id']
+    console.log(id_test.slice(0,10));
     // // use map() to build array of otu IDs (lables)
-    // var otu_ids = data['samples']['otu_ids'];
-    // console.log(otu_ids)
-        // use map() to build array of sample values
+    // var otu_ids = samples['otu_ids'];
+    // console.log(otu_ids[0]);
+        // [pull  array of sample values
+    var sample_values_test=sample_list[0]['sample_values']
+    console.log(sample_values_test.slice(0,10));
+
 
 
 
