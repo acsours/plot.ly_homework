@@ -22,28 +22,29 @@ populateDropdown();
 function init() {
     d3.json("../samples.json").then((data) => {
         var graphDiv = document.getElementById('bar')
-        var otu_ids=data["samples"][0]['otu_ids'].slice(0,10).toString()
+        var otu_ids=data["samples"][0]['otu_ids'] //.slice(0,10).toString()
         // var otu_string_list=otu_ids.toString()
         
-        var bact_values=data["samples"][0]['sample_values'].slice(0,10);
+        var bact_values=data["samples"][0]['sample_values'] //.slice(0,10);
         console.log(`OTU id numbers ${otu_ids}`);
         console.log(`Bacteria values ${bact_values}`);
         // console.log(`OTU string list ${otu_string_list}`);
-        var trace1 = {
+        var data = [{
         'type': 'bar',
-    //     'y': //otu_ids,
-        'y': otu_ids,
-    //     'x': //sample_values,
-        'x': bact_values,
-        'orientation': 'h'
-    //     'text'://an array of string values[],
-    //     // 'marker': {color: }
-        }
+        'y': otu_ids.slice(0,10).reverse(),
+        'x': bact_values.slice(0,10).reverse(),
+        'orientation': 'h',
+        // text: otu_ids.map(each_id=>each_id.toString())
+        }]
 
-        var data = [trace1]
+        // var data = [trace1]
 
         var layout = {
-            'title': 'Top 10 OTUS Sample Graph'
+            'title': 'Top 10 OTUS of subject 940',
+            yaxis: {
+                type: 'category',
+                title: 'OTU ID'
+            }
         }
 
         Plotly.newPlot(graphDiv, data, layout)
@@ -71,29 +72,40 @@ function optionChanged() {
         for (i=0; i<sample_list.length; i++) {
             if (id_number == sample_list[i]["id"]){
                 console.log(`match found at ${id_number}`);
-                var otu_ids=sample_list[i]['otu_ids'].slice(0,10).reverse().toString();
-                var bact_values=sample_list[i]['sample_values'].slice(0,10).reverse()
-                var otu_labels=sample_list[i]['otu_labels'].slice(0,10).reverse()
-                // var trace1 = {
-                //     'type': 'bar',
-                // //     'y': //otu_ids,
-                //     'y': otu_ids,
-                // //     'x': //sample_values,
-                //     'x': bact_values,
-                //     'orientation': 'h'
-                // //     'text'://an array of string values[],
-                // //     // 'marker': {color: }
-                // };
+                var otu_ids=sample_list[i]['otu_ids']//.slice(0,10).reverse().toString();
+                var bact_values=sample_list[i]['sample_values']//.slice(0,10).reverse()
+                var otu_labels=sample_list[i]['otu_labels']//.slice(0,10).reverse().toString();
+                console.log(otu_ids);
+                var trace1 = {
+                    'type': 'bar',
+                //     'y': //otu_ids,
+                    'y': otu_ids.slice(0,10).reverse(),
+                //     'x': //sample_values,
+                    'x': bact_values.slice(0,10).reverse(),
+                    'orientation': 'h'
+                //     'text'://an array of string values[],
+                //     // 'marker': {color: }
+                };
                 
-                // var data = [trace1]
+                var data = [trace1]
                 // adding test comment
-                var layout_update = {
-                    'title': `Top 10 OTUS of ${id_number}`
+                var layout= {
+                    'title': `Top OTUS of ${id_number}`,
+                    yaxis: {
+                        type: 'category',
+                        title: 'OTU ID'
+                    },
+                    xaxis: {
+                        title: 'Sample Value'
+                    }
+                    // xaxis: {
+                    //     autotick: false,
+                    // }                
                 }
-                
-                Plotly.restyle('bar', 'y', [otu_ids])
-                Plotly.restyle('bar', 'x', [bact_values])
-                Plotly.relayout('bar', layout_update)
+                // Plotly.restyle('bar', 'y', [otu_ids.slice(0,10).reverse()])
+                // Plotly.restyle('bar', 'x', [bact_values.slice(0,10).reverse()])
+                // Plotly.relayout('bar', layout_update)
+                Plotly.newPlot("bar", data, layout)
 
                 // console.log(`otu_ids ${otu_ids}`);
                 // console.log(`bact_values ${bact_values}`);
