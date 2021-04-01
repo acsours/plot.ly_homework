@@ -65,43 +65,83 @@ function optionChanged() {
     d3.json("../samples.json").then((data) => {
         // use id_number to sort through the data
         // go through each element in samples and check if id value matches dropdowm menu value
-        // var dropdown_item=d3.select('selDataset')
-        // //var dropdown_item=d3.select('selDataset').property('value')
-        // var chosen_dataset=dropdown_item.property("value");
-        // console.log(dropdown_item);
-        // console.log(`chosen_dataset is: ${chosen_dataset}`);
-        
-        // var sample_list = data['samples']
+ 
+        var sample_list = data['samples']
+        // console.log(`sample list is: ${sample_list[0]["id"]}`)
+        for (i=0; i<sample_list.length; i++) {
+            if (id_number == sample_list[i]["id"]){
+                console.log(`match found at ${id_number}`);
+                var otu_ids=sample_list[i]['otu_ids'].slice(0,10).reverse().toString();
+                var bact_values=sample_list[i]['sample_values'].slice(0,10).reverse()
+                var otu_labels=sample_list[i]['otu_labels'].slice(0,10).reverse()
+                // var trace1 = {
+                //     'type': 'bar',
+                // //     'y': //otu_ids,
+                //     'y': otu_ids,
+                // //     'x': //sample_values,
+                //     'x': bact_values,
+                //     'orientation': 'h'
+                // //     'text'://an array of string values[],
+                // //     // 'marker': {color: }
+                // };
+                
+                // var data = [trace1]
+                
+                var layout_update = {
+                    'title': `Top 10 OTUS of ${id_number}`
+                }
+                
+                Plotly.restyle('bar', 'y', [otu_ids])
+                Plotly.restyle('bar', 'x', [bact_values])
+                Plotly.relayout('bar', layout_update)
+
+                // console.log(`otu_ids ${otu_ids}`);
+                // console.log(`bact_values ${bact_values}`);
+                // console.log(`otu_labels ${otu_labels}`);
+
+            }
+            // console.log(`sample is: ${sample_list[i]["id"]}`)
+        }
         // sample_list.forEach(sample=> function(sample){
         // // if it matches, pull the otus and populate graph
-        //     if (value == sample["id"]) {
-        //         var otu_ids=sample['otu_ids'].slice(0,10);
-        //         var bact_values=sample['sample_values'].slice(0,10);
-        //         console.log(`otu_ids ${otu_ids}`)
-        //         // var trace1 = {
-        //         //     'type': 'bar',
-        //         // //     'y': //otu_ids,
-        //         //     'y': otu_ids,
-        //         // //     'x': //sample_values,
-        //         //     'x': bact_values,
-        //         //     'orientation': 'h'
-        //         // //     'text'://an array of string values[],
-        //         // //     // 'marker': {color: }
-        //         // };
+        //     console.log(`sample is: ${sample["id"]}`);
+
+        //     // switch(id_number){
+        //     //     case (sample["id"]):
+        //     //         console.log('sample found');
+        //     //         break;
+        //     //     default:
+        //     //         console.log('NO SAMPLE FOUND');
+        //     // };
+        // //     if (value == sample["id"]) {
+        // //         var otu_ids=sample['otu_ids'].slice(0,10);
+        // //         var bact_values=sample['sample_values'].slice(0,10);
+        // //         console.log(`otu_ids ${otu_ids}`)
+                // var trace1 = {
+                //     'type': 'bar',
+                // //     'y': //otu_ids,
+                //     'y': otu_ids,
+                // //     'x': //sample_values,
+                //     'x': bact_values,
+                //     'orientation': 'h'
+                // //     'text'://an array of string values[],
+                // //     // 'marker': {color: }
+                // };
                 
-        //         // var data = [trace1]
+                // var data = [trace1]
                 
-        //         // var layout = {
-        //         //     'title': 'Top 10 OTUS by individual'
-        //         // }
+                // var layout = {
+                //     'title': 'Top 10 OTUS by individual'
+                // }
                 
-        //         // Plotly.newPlot('bar', data, layout)
-        //     }
-        });
+                // Plotly.newPlot('bar', data, layout)
+        // //     }
+        // });
 
     
 
     // };
+    });
 };
 
 // // // Use the D3 library to read in samples.json.
@@ -159,5 +199,3 @@ function optionChanged() {
 // }
 
 // Plotly.newPlot('bar', data, layout)
-
-init();
