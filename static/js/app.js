@@ -55,45 +55,54 @@ init();
 
 d3.selectAll("#selDataset").on("change", optionChanged);
 // when the dropdown menu switches, pull the value from the element and use that to filter through the data, then build the plot
-// function optionChanged() {
-//     // var dropdownMenu = d3.select("#selDataset");
-//     // var id_number=dropdownMenu.property("value");
+function optionChanged() {
+    var dropdownMenu = d3.select("#selDataset");
+    var id_number=dropdownMenu.property("value");
+    console.log('waiting for changed data')
+    console.log(dropdownMenu);
+    console.log(`chosen_dataset is: ${id_number}`);
 
-//     d3.json("../samples.json").then((data) => {
-//         // use id_number to sort through the data
-//         // go through each element in samples and check if id value matches dropdowm menu value
-//         var sample_list = data['samples']
-//         sample_list.forEach(sample=> function(sample){
-//         // if it matches, pull the otus and populate graph
-//             if (value == sample["id"]) {
-//                 var otu_ids=sample['otu_ids'].slice(0,10);
-//                 var bact_values=sample['sample_values'].slice(0,10);
-//                 console.log(`otu_ids ${otu_ids}`)
-//                 // var trace1 = {
-//                 //     'type': 'bar',
-//                 // //     'y': //otu_ids,
-//                 //     'y': otu_ids,
-//                 // //     'x': //sample_values,
-//                 //     'x': bact_values,
-//                 //     'orientation': 'h'
-//                 // //     'text'://an array of string values[],
-//                 // //     // 'marker': {color: }
-//                 // };
+    d3.json("../samples.json").then((data) => {
+        // use id_number to sort through the data
+        // go through each element in samples and check if id value matches dropdowm menu value
+        // var dropdown_item=d3.select('selDataset')
+        // //var dropdown_item=d3.select('selDataset').property('value')
+        // var chosen_dataset=dropdown_item.property("value");
+        // console.log(dropdown_item);
+        // console.log(`chosen_dataset is: ${chosen_dataset}`);
+        
+        // var sample_list = data['samples']
+        // sample_list.forEach(sample=> function(sample){
+        // // if it matches, pull the otus and populate graph
+        //     if (value == sample["id"]) {
+        //         var otu_ids=sample['otu_ids'].slice(0,10);
+        //         var bact_values=sample['sample_values'].slice(0,10);
+        //         console.log(`otu_ids ${otu_ids}`)
+        //         // var trace1 = {
+        //         //     'type': 'bar',
+        //         // //     'y': //otu_ids,
+        //         //     'y': otu_ids,
+        //         // //     'x': //sample_values,
+        //         //     'x': bact_values,
+        //         //     'orientation': 'h'
+        //         // //     'text'://an array of string values[],
+        //         // //     // 'marker': {color: }
+        //         // };
                 
-//                 // var data = [trace1]
+        //         // var data = [trace1]
                 
-//                 // var layout = {
-//                 //     'title': 'Top 10 OTUS by individual'
-//                 // }
+        //         // var layout = {
+        //         //     'title': 'Top 10 OTUS by individual'
+        //         // }
                 
-//                 // Plotly.newPlot('bar', data, layout)
-//             }
-//         });
+        //         // Plotly.newPlot('bar', data, layout)
+        //     }
+        });
 
     
 
-//     });
-// };
+    // };
+};
 
 // // // Use the D3 library to read in samples.json.
 // d3.json("../samples.json").then((data) => {
