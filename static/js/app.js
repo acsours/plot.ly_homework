@@ -29,7 +29,7 @@ function init() {
         console.log(`OTU id numbers ${otu_ids}`);
         console.log(`Bacteria values ${bact_values}`);
         // console.log(`OTU string list ${otu_string_list}`);
-        var data = [{
+        var data1 = [{
         'type': 'bar',
         'y': otu_ids.slice(0,10).reverse(),
         'x': bact_values.slice(0,10).reverse(),
@@ -39,7 +39,7 @@ function init() {
 
         // var data = [trace1]
 
-        var layout = {
+        var layout1 = {
             'title': 'Top 10 OTUS of subject 940',
             yaxis: {
                 type: 'category',
@@ -47,7 +47,25 @@ function init() {
             }
         }
 
-        Plotly.newPlot(graphDiv, data, layout)
+        Plotly.newPlot(graphDiv, data1, layout1)
+
+        var trace2={
+            'y': bact_values,//.reverse(),
+            'x':otu_ids,
+            mode: 'markers',
+            marker: {
+                size: 40,
+                sizemode: 'area'
+            }
+        };
+        var data2=[trace2];
+        var layout2 = {
+            title: 'OTU Values', 
+            showlegend: false,
+            height: 800,
+            width: 800
+        };
+        Plotly.newPlot('bubble', data2, layout2)
     });
 
   };
