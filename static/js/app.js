@@ -129,8 +129,9 @@ function optionChanged() {
                 Plotly.newPlot("bar", data, layout)
 
                 var bubbleDiv = document.getElementById('bubble')
-                var desired_maximum_marker_size = 40;
-                var size = [200, 400, 600, 800, 1000]
+                // var desired_maximum_marker_size = 60;
+                // var size = [200, 400, 600, 800, 1000]
+                // var size=bact_values
                 var trace5={
                     'y': bact_values,//.slice(0,5),//.reverse(),
                     'x':otu_ids, //.slice(0,5),
@@ -138,10 +139,11 @@ function optionChanged() {
                     mode: 'markers',
                     marker: {
                         color: otu_ids,
-                        size: size,
-                        sizeref: 2.0 * Math.max(size) / (desired_maximum_marker_size**2),
-                        sizemode: 'area',
-                        opacity: 0.4
+                        size: bact_values,
+                        // sizeref: 2.0 * Math.max(size) / (desired_maximum_marker_size**2),
+                        // sizemode: 'area',
+                        opacity: 0.4,
+                        // sizemin: 5
                     }
                 };
                 var data2=[trace5];
@@ -149,8 +151,8 @@ function optionChanged() {
                 var layout2 = {
                     title: 'OTU Values', 
                     showlegend: false,
-                    height: 800,
-                    width: 800,
+                    // height: 800,
+                    // width: 800,
                     xaxis: {
                         title: "OTU ID Number",
                         autorange: true,
@@ -160,7 +162,7 @@ function optionChanged() {
                         autorange: true
                     }
                 };
-                Plotly.newPlot(bubbleDiv, data2, layout2)
+                Plotly.newPlot("bubble", data2, layout2)
 
                 // console.log(`otu_ids ${otu_ids}`);
                 // console.log(`bact_values ${bact_values}`);
