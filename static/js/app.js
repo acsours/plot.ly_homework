@@ -26,8 +26,9 @@ function init() {
         // var otu_string_list=otu_ids.toString()
         
         var bact_values=data["samples"][0]['sample_values'] //.slice(0,10);
-        console.log(`OTU id numbers ${otu_ids}`);
-        console.log(`Bacteria values ${bact_values}`);
+        var otu_labels=data["samples"][0]['otu_labels']
+        // console.log(`OTU id numbers ${otu_ids}`);
+        // console.log(`Bacteria values ${bact_values}`);
         // console.log(`OTU string list ${otu_string_list}`);
         var data1 = [{
         'type': 'bar',
@@ -48,25 +49,56 @@ function init() {
         }
 
         Plotly.newPlot(graphDiv, data1, layout1)
-//************* Bubble Graph Testing ************/
         var trace2={
-            'y': bact_values,//.reverse(),
-            'x':otu_ids,
+            'y': bact_values,//.slice(0,5),//.reverse(),
+            'x':otu_ids, //.slice(0,5),
+            text: otu_labels,//['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
             mode: 'markers',
             marker: {
-                size: 40,
-                sizemode: 'area',
-                opacity: 0.4
+                color: otu_ids,
+                size: bact_values,
+                // sizeref: 2.0 * Math.max(size) / (desired_maximum_marker_size**2),
+                // sizemode: 'area',
+                opacity: 0.4,
+                // sizemin: 5
             }
         };
         var data2=[trace2];
+
         var layout2 = {
             title: 'OTU Values', 
             showlegend: false,
-            height: 800,
-            width: 800
+            // height: 800,
+            // width: 800,
+            xaxis: {
+                title: "OTU ID Number",
+                autorange: true,
+            },
+            yaxis: {
+                title: "Sample Value",
+                autorange: true
+            }
         };
-        Plotly.newPlot('bubble', data2, layout2)
+        Plotly.newPlot("bubble", data2, layout2)
+//************* Bubble Graph Testing ************/
+        // var trace2={
+        //     'y': bact_values,//.reverse(),
+        //     'x':otu_ids,
+        //     mode: 'markers',
+        //     marker: {
+        //         size: 40,
+        //         sizemode: 'area',
+        //         opacity: 0.4
+        //     }
+        // };
+        // var data2=[trace2];
+        // var layout2 = {
+        //     title: 'OTU Values', 
+        //     showlegend: false,
+        //     height: 800,
+        //     width: 800
+        // };
+        // Plotly.newPlot('bubble', data2, layout2)
 /************************************** */
 
     });
@@ -83,11 +115,27 @@ function optionChanged() {
     console.log('waiting for changed data')
     console.log(dropdownMenu);
     console.log(`chosen_dataset is: ${id_number}`);
-
+    var panelBody = d3.select("#sample-metadata");
+    console.log
     d3.json("../samples.json").then((data) => {
         // use id_number to sort through the data
         // go through each element in samples and check if id value matches dropdowm menu value
- 
+        var metadata = data['metadata']
+        // console.log(metadata);
+        metadata.forEach(function(test_subject) {// console.log(test_subject));
+            if (id_number==test_subject['id']) {
+                console.log('match found')
+                console.log(test_subject); //returns {id: 944, ethnicity: "european", etc.}
+                // I want to go through each key value pair in test subject and put in a new row in the table
+                // test_subject.forEach(item=>console.log(item));
+                for (const [key, value] of Object.entries(test_subject)) {
+                    console.log(`${key}: ${value}`)
+                    var new_row=panelBody.append('tr');
+                    new_row.append('td').text(`test`);
+                }
+                // 
+            };
+        });
         var sample_list = data['samples']
         // console.log(`sample list is: ${sample_list[0]["id"]}`)
         for (i=0; i<sample_list.length; i++) {
@@ -128,11 +176,11 @@ function optionChanged() {
                 // Plotly.relayout('bar', layout_update)
                 Plotly.newPlot("bar", data, layout)
 
-                var bubbleDiv = document.getElementById('bubble')
+                // var bubbleDiv = document.getElementById('bubble')
                 // var desired_maximum_marker_size = 60;
                 // var size = [200, 400, 600, 800, 1000]
                 // var size=bact_values
-                var trace5={
+                var trace2={
                     'y': bact_values,//.slice(0,5),//.reverse(),
                     'x':otu_ids, //.slice(0,5),
                     text: otu_labels,//['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
@@ -146,7 +194,7 @@ function optionChanged() {
                         // sizemin: 5
                     }
                 };
-                var data2=[trace5];
+                var data2=[trace2];
         
                 var layout2 = {
                     title: 'OTU Values', 
