@@ -48,14 +48,15 @@ function init() {
         }
 
         Plotly.newPlot(graphDiv, data1, layout1)
-
+//************* Bubble Graph Testing ************/
         var trace2={
             'y': bact_values,//.reverse(),
             'x':otu_ids,
             mode: 'markers',
             marker: {
                 size: 40,
-                sizemode: 'area'
+                sizemode: 'area',
+                opacity: 0.4
             }
         };
         var data2=[trace2];
@@ -66,6 +67,8 @@ function init() {
             width: 800
         };
         Plotly.newPlot('bubble', data2, layout2)
+/************************************** */
+
     });
 
   };
@@ -124,6 +127,40 @@ function optionChanged() {
                 // Plotly.restyle('bar', 'x', [bact_values.slice(0,10).reverse()])
                 // Plotly.relayout('bar', layout_update)
                 Plotly.newPlot("bar", data, layout)
+
+                var bubbleDiv = document.getElementById('bubble')
+                var desired_maximum_marker_size = 40;
+                var size = [200, 400, 600, 800, 1000]
+                var trace5={
+                    'y': bact_values,//.slice(0,5),//.reverse(),
+                    'x':otu_ids, //.slice(0,5),
+                    text: otu_labels,//['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
+                    mode: 'markers',
+                    marker: {
+                        color: otu_ids,
+                        size: size,
+                        sizeref: 2.0 * Math.max(size) / (desired_maximum_marker_size**2),
+                        sizemode: 'area',
+                        opacity: 0.4
+                    }
+                };
+                var data2=[trace5];
+        
+                var layout2 = {
+                    title: 'OTU Values', 
+                    showlegend: false,
+                    height: 800,
+                    width: 800,
+                    xaxis: {
+                        title: "OTU ID Number",
+                        autorange: true,
+                    },
+                    yaxis: {
+                        title: "Sample Value",
+                        autorange: true
+                    }
+                };
+                Plotly.newPlot(bubbleDiv, data2, layout2)
 
                 // console.log(`otu_ids ${otu_ids}`);
                 // console.log(`bact_values ${bact_values}`);
