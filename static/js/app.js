@@ -21,7 +21,17 @@ populateDropdown();
 // Initializes the page with a default plot
 function init() {
     d3.json("../samples.json").then((data) => {
-        var graphDiv = document.getElementById('bar')
+        // populate panel object with initial data (test subject 940)
+        var panelBody = d3.select("#sample-metadata");
+        var test_subject=data["metadata"][0]
+        console.log(Object.entries(test_subject));
+        for (const [key, value] of Object.entries(test_subject)) {
+            console.log(`${key}: ${value}`)
+            var new_row=panelBody.append('tr');
+            new_row.append('td').text(`${key}: ${value}`);
+        };
+    
+        // var graphDiv = document.getElementById('bar')
         var otu_ids=data["samples"][0]['otu_ids'] //.slice(0,10).toString()
         // var otu_string_list=otu_ids.toString()
         
@@ -48,7 +58,7 @@ function init() {
             }
         }
 
-        Plotly.newPlot(graphDiv, data1, layout1)
+        Plotly.newPlot('bar', data1, layout1)
         var trace2={
             'y': bact_values,//.slice(0,5),//.reverse(),
             'x':otu_ids, //.slice(0,5),
@@ -121,6 +131,7 @@ function optionChanged() {
         // use id_number to sort through the data
         // go through each element in samples and check if id value matches dropdowm menu value
         var metadata = data['metadata']
+        panelBody.html("");
         // console.log(metadata);
         metadata.forEach(function(test_subject) {// console.log(test_subject));
             if (id_number==test_subject['id']) {
@@ -131,7 +142,7 @@ function optionChanged() {
                 for (const [key, value] of Object.entries(test_subject)) {
                     console.log(`${key}: ${value}`)
                     var new_row=panelBody.append('tr');
-                    new_row.append('td').text(`test`);
+                    new_row.append('td').text(`${key}: ${value}`);
                 }
                 // 
             };
