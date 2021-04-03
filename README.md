@@ -9,10 +9,6 @@ This is a script created to read data from a JSON file and load into a responsiv
 * uses d3 selectors and event handlers to filter data and create subsequent visualizations 
 
 #### CDN specifications:
-Javascript:
-``` 
-https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js 
-```
 
 Bootstrap:
 ```
@@ -25,7 +21,8 @@ https://cdn.plot.ly/plotly-latest.min.js
 
 D3:
 ```
-https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+
 ```
 
 #### Dashboard Preview
