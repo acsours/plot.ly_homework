@@ -3,7 +3,7 @@
 // function populateDropdown() {
 
 // Populate Dropdown Menu
-d3.json("../samples.json").then((data) => {
+d3.json("../../samples.json").then((data) => {
     // access the data["names"] and save as an array
         var id_list=data["names"] // data.names --> David Chao Recommended
         // console.log(`id_list ${id_list}`);
