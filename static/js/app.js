@@ -128,7 +128,7 @@ function optionChanged(selected_id) {
     // console.log(`chosen_dataset is: ${id_number}`);
     var panelBody = d3.select("#sample-metadata");
 
-    d3.json("../samples.json").then((data) => {
+    d3.json("samples.json").then((data) => {
         // use id_number to sort through the data
         // go through each element in samples and check if id value matches dropdowm menu value
         var metadata = data['metadata']
